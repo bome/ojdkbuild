@@ -1,0 +1,50 @@
+From 680a261974d56b8fccf9bb8699341d8ba4f9dce3 Mon Sep 17 00:00:00 2001
+From: Florian Boemers <Florian.Bomers@bome.com>
+Date: Tue, 7 Jun 2016 21:01:50 +0200
+Subject: [PATCH] fix x86 build
+
+---
+ lib/freebl/mpi/mpi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/lib/freebl/mpi/mpi.c b/lib/freebl/mpi/mpi.c
+index 2a3719b..bd85cd1 100644
+--- a/lib/freebl/mpi/mpi.c
++++ b/lib/freebl/mpi/mpi.c
+@@ -3945,6 +3945,8 @@ void s_mpv_mul_d_add(const mp_digit *a, mp_size a_len, mp_digit b,
+ #endif
+ }
+ 
++/* $$fb this is defined in mpi_x86_asm.c */
++#ifndef NSS_X86
+ /* Presently, this is only used by the Montgomery arithmetic code. */
+ /* c += a * b */
+ void s_mpv_mul_d_add_prop(const mp_digit *a, mp_size a_len, mp_digit b, mp_digit *c)
+@@ -3991,6 +3993,7 @@ void s_mpv_mul_d_add_prop(const mp_digit *a, mp_size a_len, mp_digit b, mp_digit
+   }
+ #endif
+ }
++#endif /*!NSS_X86*/
+ #endif
+ 
+ #if defined(MP_USE_UINT_DIGIT) && defined(MP_USE_LONG_LONG_MULTIPLY)
+@@ -4017,6 +4020,8 @@ void s_mpv_mul_d_add_prop(const mp_digit *a, mp_size a_len, mp_digit b, mp_digit
+   }
+ #endif
+ 
++/* $$fb this is defined in mpi_x86_asm.c */
++#ifndef NSS_X86
+ #if !defined(MP_ASSEMBLY_SQUARE)
+ /* Add the squares of the digits of a to the digits of b. */
+ void s_mpv_sqr_add_prop(const mp_digit *pa, mp_size a_len, mp_digit *ps)
+@@ -4089,6 +4094,7 @@ void s_mpv_sqr_add_prop(const mp_digit *pa, mp_size a_len, mp_digit *ps)
+ #endif
+ }
+ #endif
++#endif /* !NSS_X86 */
+ 
+ #if (defined(MP_NO_MP_WORD) || defined(MP_NO_DIV_WORD)) \
+ && !defined(MP_ASSEMBLY_DIV_2DX1D)
+-- 
+2.8.1.windows.1
+

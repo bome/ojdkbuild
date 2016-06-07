@@ -1,0 +1,25 @@
+From f822f8618da7507d70ace3259026ab3cfd4cd4b7 Mon Sep 17 00:00:00 2001
+From: Florian Boemers <Florian.Bomers@bome.com>
+Date: Tue, 7 Jun 2016 21:03:21 +0200
+Subject: [PATCH] add missing include for x86 build
+
+---
+ pr/src/md/windows/ntinrval.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/pr/src/md/windows/ntinrval.c b/pr/src/md/windows/ntinrval.c
+index dab9e3f..34a7fd3 100644
+--- a/pr/src/md/windows/ntinrval.c
++++ b/pr/src/md/windows/ntinrval.c
+@@ -9,6 +9,8 @@
+  */
+ 
+ #include "primpl.h"
++/*$$fb*/
++#include <mmsystem.h>
+ 
+ #ifdef WINCE
+ typedef DWORD (*IntervalFuncType)(void);
+-- 
+2.8.1.windows.1
+

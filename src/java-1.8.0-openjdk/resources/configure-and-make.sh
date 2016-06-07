@@ -16,14 +16,25 @@
 
 set -x
 
+if [ "i586" == "${TARGET_CPU}" ]; then
+	TARGET_BITS=32
+	VC_DIR=
+	MSVCR_DIR=i586
+else
+	TARGET_BITS=64
+	VC_DIR=/x86_amd64
+	MSVCR_DIR=amd64
+fi
+
 bash ./configure \
+	--with-target-bits=$TARGET_BITS \
     --enable-unlimited-crypto=${${PROJECT_NAME}_UNLIMITED_CRYPTO_FLAG} \
     --enable-debug-symbols=${${PROJECT_NAME}_DEBUG_SYMBOLS_FLAG} \
     --with-debug-level=${${PROJECT_NAME}_DEBUG_LEVEL} \
     --with-cacerts-file=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/ca-certificates/cacerts \
     --with-boot-jdk=${CMAKE_CURRENT_LIST_DIR}/../../tools/bootjdk7 \
-    --with-tools-dir=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2010e/VC/bin/x86_amd64 \
-    --with-msvcr-dll=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/msvcr100/amd64/msvcr100.dll \
+    --with-tools-dir=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/vs2010e/VC/bin$VC_DIR \
+    --with-msvcr-dll=${CMAKE_CURRENT_LIST_DIR}/../../tools/toolchain/msvcr100/$MSVCR_DIR/msvcr100.dll \
     --with-freetype-include=${CMAKE_CURRENT_LIST_DIR}/../../lookaside/freetype/include/ \
     --with-freetype-lib=${CMAKE_CURRENT_BINARY_DIR}/bin \
     --with-num-cores=1 \

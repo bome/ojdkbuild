@@ -19,6 +19,8 @@ set ( OJDKBUILD_DIR ${CMAKE_CURRENT_LIST_DIR}/../.. CACHE INTERNAL "" )
 include ( ${OJDKBUILD_DIR}/resources/cmake/ojdkbuild_common.cmake )
 project ( openjdk NONE )
 
+set ( TARGET_CPU "$ENV{TARGET_CPU}" )
+
 # options
 set ( ${PROJECT_NAME}_MILESTONE "ojdkbuild" CACHE STRING "Version string 'milestone' field" )
 set ( ${PROJECT_NAME}_UPDATE "91" CACHE STRING "Version string 'update' field" )
@@ -60,8 +62,9 @@ configure_file ( ${OJDKBUILD_DIR}/resources/installer/installer.json
         ${CMAKE_CURRENT_BINARY_DIR}/installer.json
         NEWLINE_STYLE UNIX )        
         
-# shorcut vars
-set ( ${PROJECT_NAME}_IMAGE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE}.b${${PROJECT_NAME}_BUILD}.windows.x86_64 )        
+# shortcut vars
+#$$fb use TARGET_CPU
+set ( ${PROJECT_NAME}_IMAGE java-1.8.0-openjdk-1.8.0.${${PROJECT_NAME}_UPDATE}-${${PROJECT_NAME}_RPMBUILD}-${${PROJECT_NAME}_MILESTONE}.b${${PROJECT_NAME}_BUILD}.windows.${TARGET_CPU} )        
 set ( ${PROJECT_NAME}_TZDATA_SRC ${OJDKBUILD_DIR}/lookaside/tzdata )
 set ( ${PROJECT_NAME}_TZDATA_DEST ${OJDKBUILD_DIR}/lookaside/java-1.8.0-openjdk/jdk/make/data/tzdata )
 set ( ${PROJECT_NAME}_FONTS_SRC ${CMAKE_CURRENT_LIST_DIR}/../../lookaside/dejavu-fonts )
